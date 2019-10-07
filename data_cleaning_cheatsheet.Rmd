@@ -38,6 +38,8 @@ output:
 <!-- } -->
 <!-- </style> -->
 
+<link rel='stylesheet' href='//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css'>
+
 <style>
   .kable_wrapper {
     display: block;
@@ -47,6 +49,13 @@ output:
     table-layout: fixed;
     width: 100%;
     border-collapse:collapse;
+}
+code, kbd, pre, samp {
+  font-family: 'Hack', monospace;
+}
+p code {
+  color: #cc00bb;
+  background: #fffcfa;
 }
 td{
     word-wrap:break-word
@@ -72,7 +81,7 @@ library(kableExtra)
 
 Hi! Welcome to my data journalism R cheat sheet for cleaning and wrangling data. Just like the [R cheat sheet resources][10] of package-based cheat sheets, Journalists have put out cheat sheets before, like [MaryJo Webster's R cheat sheet][03]. Hat tip to her and her [amazing collection of data journalism resources][04]!
 
-I use this cheat sheet as an index to functions I will likely encounter and use when I am clenaing data, so I am hoping that it can save you some time googling around. Most of the functions listed here are what I collected when cleaning data at the NICAR data library and for the [accountability project][14] at the Investigative Reporting Workshop.
+I use this cheat sheet as an index to functions I will likely encounter and use when I am cleaning data, so I am hoping that it can save you some time googling around. Most of the functions listed here are what I collected when cleaning data at the NICAR data library and for the [accountability project][14] at the Investigative Reporting Workshop.
 
 # What's this for?
 Much as I use data cleaning functions on a regular basis, the syntax or function names sometimes get fuzzy every once in a while. So I have organized some most frequently used functions to help refresh memories for certain goals in data processing and also pitfalls! Here they are.
@@ -141,7 +150,7 @@ for(i in seq_along(cutoff)){
 # cat(str_c("### ", headers$sections, collapse = "\n"))
 ```
 
-### Better printing & Inspection
+## Better printing & Inspection
 ```{r echo=FALSE}
 html_table_width <- function(kable_output, width){
   width_html <- paste0(paste0('<td width="', width, '">'), collapse = "\n")
@@ -165,56 +174,56 @@ print_kable <- function (all_tables_i) {
 print_kable(1)
 ```
 
-### Dealing with NAs
+## Dealing with NAs
 ```{r echo=FALSE}
 print_kable(2)
 ```
-### Data table summary
+## Data table summary
 ```{r echo=FALSE}
 print_kable(3)
 ```
-### Modify Strings
+## Modify Strings
 ```{r echo=FALSE, results='asis'}
 print_kable(4)
 ```
-### Index & Subsetting
+## Index & Subsetting
 It is very _important_ to note that negative index does not work the same way as the inverse order in Python syntax. In R, the minus sign (-) means to exclude a certain element. As a result, you can use `vector[length(vector)]` to access the last element of a vector.
 ```{r echo=FALSE}
 print_kable(9)
 ```
-### Columns
+## Columns
 ```{r echo=FALSE}
 print_kable(8)
 ```
-### Making a dataframe
+## Making a dataframe
 ```{r echo=FALSE}
 print_kable(5)
 ```
-### Ordering
+## Ordering
 ```{r echo=FALSE}
 print_kable(12)
 ```
-### Set Operations & Joins
+## Set Operations & Joins
 ```{r echo=FALSE}
 print_kable(10)
 ```
-### Conditions
+## Conditions
 ```{r echo=FALSE}
 print_kable(11)
 ```
-### File Paths
+## File Paths
 ```{r echo=FALSE}
 print_kable(7)
 ```
-### Batch processing
+## Batch processing
 ```{r echo=FALSE}
 print_kable(13)
 ```
-### ggplot2
+## ggplot2
 ```{r echo=FALSE}
 print_kable(6)
 ```
-### R Studio Shortcuts
+## R Studio Shortcuts
 ```{r echo=FALSE}
 kable(
 x = tibble(what_it_does = pull(My_R_cheatsheet[cutoff[length(cutoff)]+1:length(My_R_cheatsheet),1]),
@@ -223,7 +232,7 @@ x = tibble(what_it_does = pull(My_R_cheatsheet[cutoff[length(cutoff)]+1:length(M
     kable_styling(bootstrap_options = c("striped", "hover")) %>%  row_spec(0, bold = T, color = "white", background = "#8CBEED")
 ```
 
-### Writing Functions and loops
+## Writing Functions and loops
 Here's [some function help][07]. The basic syntax of a function is 
 ```{r function syntax, eval=F}
 f <- function(<arguments>) {
@@ -237,14 +246,16 @@ for (i in seq_along(df)) {            # 2. sequence
   output[[i]] <- median(df[[i]])      # 3. body
 }
 ```
-### Function execution(order, arguments) 
+## Function execution(order, arguments) 
 Computer reads scripts in a certain order and it can get confused when you have many arguments. To help organize things, and make your code less confusing for machine and humans to read by bracketing code chunks you wish to execute first `{}`.  
 
 A common usage revolves around `str_match_all`, a function to find strings matching a pattern and whose results is a nested list. In order to access individual capture groups, you will use `str_match_all(data,patter)[,2]`. When you wish to do something about the result, you would likely need to wrap it in brackets like `{str_match_all(data,patter)[,2]}`, so that R knows to treat it as a whole.  
 
 There are certain operators in R that streamline code executation and saves you some typing. For example, `.` can represent the object being passed into a function. For example, if you wish to concatenate a vector with other strings, you can use the syntax `df$col %>% str_c("before",.,"after")` to specify the order of the string placement. Learn more about the `magrittr`'s `.` placeholder [here][11].
 
-## Good reads
+
+# Good reads
+
 * RMarkdown: [knitr syntax][16].
 This cheat sheet was originally a [spreadsheet][13], and you can learn about how I turned it into a rendered html page with the package `knitr` in the Rmd.
 * Regex: [regexplain package][09]: a handy tool for using regex in RStudio
