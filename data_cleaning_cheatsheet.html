@@ -1870,13 +1870,13 @@ replace matching strings in a dataframe
 base, stringr
 </td>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-RETA2016_negative &lt;- mutate_if(as_tibble(reta2016_clean), is.character, str_replace_all, pattern = “J”, replacement = “-1”)
+RETA2016_negative &lt;- mutate_if(as_tibble(reta2016_clean), is.character, str_replace_all, pattern = “J”, replacement = “-1”) la_lobby &lt;- la_lobby %&gt;% mutate(lobbyist_name_clean = str_remove(LobbyistName1, “MRS.\\s|MR.\\s|MS.\\s|MISS\\s|DR.\\s”))
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
-gsub() is the base R version.
+gsub() is the base R version. When trying to replace or remove with multiple patterns, use regex “|” . Otherwise, the function matches the first element in the pattern against the first element of string vector, etc. Therefore, you could “subtract” the content of one column from another in effect. df &lt;- df %&gt;% mutate(statezip = str_remove(df<span class="math inline"><em>c</em><em>i</em><em>t</em><em>y</em><em>s</em><em>t</em><em>a</em><em>t</em><em>e</em><em>z</em><em>i</em><em>p</em>, <em>d</em><em>f</em></span>city))
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
-<a href="https://community.rstudio.com/t/understanding-the-use-of-str-replace-all-with-multiple-patterns/1849" class="uri">https://community.rstudio.com/t/understanding-the-use-of-str-replace-all-with-multiple-patterns/1849</a>
+<a href="https://community.rstudio.com/t/understanding-the-use-of-str-replace-all-with-multiple-patterns/1849" class="uri">https://community.rstudio.com/t/understanding-the-use-of-str-replace-all-with-multiple-patterns/1849</a> <a href="https://stackoverflow.com/questions/29036960/remove-multiple-patterns-from-text-vector-r" class="uri">https://stackoverflow.com/questions/29036960/remove-multiple-patterns-from-text-vector-r</a> <a href="https://community.rstudio.com/t/understanding-the-use-of-str-replace-all-with-multiple-patterns/1849" class="uri">https://community.rstudio.com/t/understanding-the-use-of-str-replace-all-with-multiple-patterns/1849</a>
 </td>
 </tr>
 <tr>
@@ -1939,7 +1939,7 @@ stringr
 str_match(strings, phone)
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
-str_match returns a character matrix. First column is the complete match, followed by one column for each capture group. str_match_all returns a list of character matrices. Use the [,n] index for the nth capture group
+str_match() returns a character matrix. First column is the complete match, followed by one column for each capture group. str_match_all returns a list of character matrices. Use the [,n] index for the nth capture group
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
@@ -2104,7 +2104,7 @@ dplyr
 my_data%&gt;%select(starts_with(“Petal”))
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
-starts_with() is a syntax that is part of the dplyr package that works with select() only
+starts_with() is a syntax that is part of the dplyr package that works with select() only.
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
