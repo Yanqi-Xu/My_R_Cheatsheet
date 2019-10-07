@@ -123,7 +123,6 @@ For how the function was written to make sense of how it's executed, simply type
 Further Readings:
 [Introduction to the R Language Functions, Berkeley Workshop][05]
 
-You're now ready to use functions to solve problems like these:
 ```{r echo = FALSE}
 My_R_cheatsheet <- read_csv("My_R_cheatsheet.csv")
 
@@ -150,6 +149,27 @@ for(i in seq_along(cutoff)){
 # cat(str_c("### ", headers$sections, collapse = "\n"))
 ```
 
+## Writing Functions and loops
+Here's [some function help][07]. The basic syntax of a function is 
+```{r function syntax, eval=F}
+f <- function(<arguments>) {
+## Do something interesting
+}
+```
+Trying to write for loops? [R for data science][08] has a great chapter on it.
+```{r for loops,eval=F}
+output <- vector("double", ncol(df))  # 1. output
+for (i in seq_along(df)) {            # 2. sequence
+  output[[i]] <- median(df[[i]])      # 3. body
+}
+```
+## Function execution(order, arguments) 
+Computer reads scripts in a certain order and it can get confused when you have many arguments. To help organize things, and make your code less confusing for machine and humans to read by bracketing code chunks you wish to execute first `{}`.  
+
+A common usage revolves around `str_match_all`, a function to find strings matching a pattern and whose results is a nested list. In order to access individual capture groups, you will use `str_match_all(data,patter)[,2]`. When you wish to do something about the result, you would likely need to wrap it in brackets like `{str_match_all(data,patter)[,2]}`, so that R knows to treat it as a whole.  
+
+There are certain operators in R that streamline code executation and saves you some typing. For example, `.` can represent the object being passed into a function. For example, if you wish to concatenate a vector with other strings, you can use the syntax `df$col %>% str_c("before",.,"after")` to specify the order of the string placement. Learn more about the `magrittr`'s `.` placeholder [here][11].
+
 ## Better printing & Inspection
 ```{r echo=FALSE}
 html_table_width <- function(kable_output, width){
@@ -173,6 +193,7 @@ print_kable <- function (all_tables_i) {
 }
 print_kable(1)
 ```
+You're now ready to use functions to solve problems like these:
 
 ## Dealing with NAs
 ```{r echo=FALSE}
@@ -226,33 +247,11 @@ print_kable(6)
 ## R Studio Shortcuts
 ```{r echo=FALSE}
 kable(
-x = tibble(what_it_does = pull(My_R_cheatsheet[cutoff[length(cutoff)]+1:length(My_R_cheatsheet),1]),
-       on_the_screen = pull(My_R_cheatsheet[cutoff[length(cutoff)]+1:length(My_R_cheatsheet),2]),
-      you_will_type = pull(My_R_cheatsheet[cutoff[length(cutoff)]+1:length(My_R_cheatsheet),3]))) %>% 
+x = tibble(what_it_does = pull(My_R_cheatsheet[{cutoff[length(cutoff)]+1}:nrow(My_R_cheatsheet),1]),
+       on_the_screen = pull(My_R_cheatsheet[{cutoff[length(cutoff)]+1}:nrow(My_R_cheatsheet),2]),
+      you_will_type = pull(My_R_cheatsheet[{cutoff[length(cutoff)]+1}:nrow(My_R_cheatsheet),3]))) %>% 
     kable_styling(bootstrap_options = c("striped", "hover")) %>%  row_spec(0, bold = T, color = "white", background = "#8CBEED")
 ```
-
-## Writing Functions and loops
-Here's [some function help][07]. The basic syntax of a function is 
-```{r function syntax, eval=F}
-f <- function(<arguments>) {
-## Do something interesting
-}
-```
-Trying to write for loops? [R for data science][08] has a great chapter on it.
-```{r for loops,eval=F}
-output <- vector("double", ncol(df))  # 1. output
-for (i in seq_along(df)) {            # 2. sequence
-  output[[i]] <- median(df[[i]])      # 3. body
-}
-```
-## Function execution(order, arguments) 
-Computer reads scripts in a certain order and it can get confused when you have many arguments. To help organize things, and make your code less confusing for machine and humans to read by bracketing code chunks you wish to execute first `{}`.  
-
-A common usage revolves around `str_match_all`, a function to find strings matching a pattern and whose results is a nested list. In order to access individual capture groups, you will use `str_match_all(data,patter)[,2]`. When you wish to do something about the result, you would likely need to wrap it in brackets like `{str_match_all(data,patter)[,2]}`, so that R knows to treat it as a whole.  
-
-There are certain operators in R that streamline code executation and saves you some typing. For example, `.` can represent the object being passed into a function. For example, if you wish to concatenate a vector with other strings, you can use the syntax `df$col %>% str_c("before",.,"after")` to specify the order of the string placement. Learn more about the `magrittr`'s `.` placeholder [here][11].
-
 
 # Good reads
 
