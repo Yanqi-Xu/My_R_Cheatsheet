@@ -1,5 +1,5 @@
 ---
-title: "My R Cheatsheet"
+title: "My R Cheat Sheet"
 author: "Yanqi Xu"
 date: "`r Sys.Date()`"
 output: 
@@ -70,9 +70,9 @@ options(knitr.kable.NA = '')
 library(kableExtra)
 ```
 
-Hi! Welcome to my Data Journalism Cleaning R Cheatsheet for cleaning and wrangling data. Just like the [R cheatsheet resources][10] of package-based cheatsheet, Journalists have put out cheatsheets before, like [MaryJo Webster's R Cheatsheet][03]. Hat tip to her and her [amazing collection of data journalism resources][04]!
+Hi! Welcome to my data journalism R cheat sheet for cleaning and wrangling data. Just like the [R cheat sheet resources][10] of package-based cheat sheets, Journalists have put out cheat sheets before, like [MaryJo Webster's R cheat sheet][03]. Hat tip to her and her [amazing collection of data journalism resources][04]!
 
-I use this cheatsheet as an index to functions I will likely encounter and use when I am clenaing data, so I am hoping that it can save you some time googling around. Most of the functions listed here are what I collected when cleaning data at the NICAR data library and for the [accountability project][14] at the Investigative Reporting Workshop.
+I use this cheat sheet as an index to functions I will likely encounter and use when I am clenaing data, so I am hoping that it can save you some time googling around. Most of the functions listed here are what I collected when cleaning data at the NICAR data library and for the [accountability project][14] at the Investigative Reporting Workshop.
 
 # What's this for?
 Much as I use data cleaning functions on a regular basis, the syntax or function names sometimes get fuzzy every once in a while. So I have organized some most frequently used functions to help refresh memories for certain goals in data processing and also pitfalls! Here they are.
@@ -82,17 +82,17 @@ I always think the most important thing to know about functions and to tap into 
 
 There are, of course, more than one way to **let's not skin a cat**! For example, picture a jumbled field of last name, first name. If you wish to separate the names into different columns, you can either use the `separate()` function to split up the column by a certain character, or you can use regular expression to capture whatever goes before the comma with `str_match("^(.+),")[,2]`, and whatever comes after as  `str_match(",(.+)$")[,2]`. Pick and choose as you wish!
 
-This cheatsheet  doesn't cover the nuts and bolts of R, for which I highly recommend Andrew Ba Tran's tutorial [Journalism with R][02].
+This cheat sheet  doesn't cover the nuts and bolts of R, for which I highly recommend Andrew Ba Tran's tutorial [Journalism with R][02].
 
 [02]: http://learn.r-journalism.com/en/introduction/
-[03]: https://mjwebster.github.io/DataJ/R/RCheatSheet.html
+[03]: https://mjwebster.github.io/DataJ/R/Rcheat sheet.html
 [04]: http://mjwebster.github.io/DataJ/
 [05]: https://www.stat.berkeley.edu/~statcur/Workshop2/Presentations/functions.pdf
 [06]: https://github.com/r-lib/remotes
 [07]: https://swcarpentry.github.io/r-novice-inflammation/02-func-R/
 [08]: https://r4ds.had.co.nz/functions.html
 [09]: https://github.com/gadenbuie/regexplain
-[10]: https://rstudio.com/resources/cheatsheets/
+[10]: https://rstudio.com/resources/cheat sheets/
 [11]: https://stackoverflow.com/questions/54815607/r-combinations-with-dot-and-pipe-operator
 [12]: https://forms.gle/2jQJksuyrZJZJwVX6
 [13]: https://docs.google.com/spreadsheets/d/1A8dGFnnEHwiWOif9Eiejlsw3C29PvDM0lef4wMkFZAE/edit#gid=0
@@ -116,13 +116,13 @@ Further Readings:
 
 You're now ready to use functions to solve problems like these:
 ```{r echo = FALSE}
-My_R_Cheatsheet <- read_csv("My_R_Cheatsheet.csv")
+My_R_cheatsheet <- read_csv("My_R_cheatsheet.csv")
 
-headers <- My_R_Cheatsheet %>% filter(rowSums(is.na(My_R_Cheatsheet))==4)
+headers <- My_R_cheatsheet %>% filter(rowSums(is.na(My_R_cheatsheet))==4)
 
 headers <- headers %>% mutate(sections = coalesce(headers[[1]],headers[[3]]))
 # my original spreadsheet was created to include columns that will be turned into subheads of the documents
-cutoff <- which(rowSums(is.na(My_R_Cheatsheet))==4)
+cutoff <- which(rowSums(is.na(My_R_cheatsheet))==4)
 
 all_tables <- list()
 
@@ -130,11 +130,11 @@ for(i in seq_along(cutoff)){
   if (i == length(cutoff)){
     break
   } else
-  table <- tibble(feature = My_R_Cheatsheet$feature [(cutoff[i]+1):(cutoff[i+1]-1)],
-       package = My_R_Cheatsheet$package [(cutoff[i]+1):(cutoff[i+1]-1)],
-      syntax = My_R_Cheatsheet$`function` [(cutoff[i]+1):(cutoff[i+1]-1)],
-      notes = My_R_Cheatsheet$notes [(cutoff[i]+1):(cutoff[i+1]-1)],
-      references = My_R_Cheatsheet$references[(cutoff[i]+1):(cutoff[i+1]-1)])
+  table <- tibble(feature = My_R_cheatsheet$feature [(cutoff[i]+1):(cutoff[i+1]-1)],
+       package = My_R_cheatsheet$package [(cutoff[i]+1):(cutoff[i+1]-1)],
+      syntax = My_R_cheatsheet$`function` [(cutoff[i]+1):(cutoff[i+1]-1)],
+      notes = My_R_cheatsheet$notes [(cutoff[i]+1):(cutoff[i+1]-1)],
+      references = My_R_cheatsheet$references[(cutoff[i]+1):(cutoff[i+1]-1)])
  all_tables[[i]] <- table
 }
 # this line prints out the sections in the rmd to copy from console
@@ -217,9 +217,9 @@ print_kable(6)
 ### R Studio Shortcuts
 ```{r echo=FALSE}
 kable(
-x = tibble(what_it_does = pull(My_R_Cheatsheet[cutoff[length(cutoff)]+1:length(My_R_Cheatsheet),1]),
-       on_the_screen = pull(My_R_Cheatsheet[cutoff[length(cutoff)]+1:length(My_R_Cheatsheet),2]),
-      you_will_type = pull(My_R_Cheatsheet[cutoff[length(cutoff)]+1:length(My_R_Cheatsheet),3]))) %>% 
+x = tibble(what_it_does = pull(My_R_cheatsheet[cutoff[length(cutoff)]+1:length(My_R_cheatsheet),1]),
+       on_the_screen = pull(My_R_cheatsheet[cutoff[length(cutoff)]+1:length(My_R_cheatsheet),2]),
+      you_will_type = pull(My_R_cheatsheet[cutoff[length(cutoff)]+1:length(My_R_cheatsheet),3]))) %>% 
     kable_styling(bootstrap_options = c("striped", "hover")) %>%  row_spec(0, bold = T, color = "white", background = "#8CBEED")
 ```
 
@@ -246,8 +246,8 @@ There are certain operators in R that streamline code executation and saves you 
 
 ## Good reads
 * RMarkdown: [knitr syntax][16].
-This cheatsheet was originally a [spreadsheet][13], and you can learn about how I turned it into a rendered html page with the package `knitr` in the Rmd.
+This cheat sheet was originally a [spreadsheet][13], and you can learn about how I turned it into a rendered html page with the package `knitr` in the Rmd.
 * Regex: [regexplain package][09]: a handy tool for using regex in RStudio
 * General R: [R for Data Science][15]: Needs no introduction? All the bread and butter of R.
 
-Feel free to use the cheatsheet whatever way you want. If there's any R function you wish to add that could be helpful for data cleaning, please fill out this [google form][12] and I'll add them to this thing.
+Feel free to use the cheat sheet whatever way you want. If there's any R function you wish to add that could be helpful for data cleaning, please fill out this [google form][12] and I'll add them to this thing.
