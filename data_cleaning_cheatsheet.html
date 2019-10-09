@@ -12,7 +12,7 @@
 
 <meta name="author" content="Yanqi Xu" />
 
-<meta name="date" content="2019-10-07" />
+<meta name="date" content="2019-10-08" />
 
 <title>My R Cheat Sheet</title>
 
@@ -1539,7 +1539,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">My R Cheat Sheet</h1>
 <h4 class="author">Yanqi Xu</h4>
-<h4 class="date">2019-10-07</h4>
+<h4 class="date">2019-10-08</h4>
 
 </div>
 
@@ -1618,28 +1618,35 @@ td{
     word-wrap:break-word
 }
 </style>
-<p>Hi! Welcome to my data journalism R cheat sheet for cleaning and wrangling data. Just like the <a href="https://rstudio.com/resources/cheat%20sheets/">R cheat sheet resources</a> of package-based cheat sheets, Journalists have put out cheat sheets before, like <a href="https://mjwebster.github.io/DataJ/R/Rcheat%20sheet.html">MaryJo Webster’s R cheat sheet</a>. Hat tip to her and her <a href="http://mjwebster.github.io/DataJ/">amazing collection of data journalism resources</a>!</p>
-<p>I use this cheat sheet as an index to functions I will likely encounter and use when I am cleaning data, so I am hoping that it can save you some time googling around. Most of the functions listed here are what I collected when cleaning data at the NICAR data library and for the <a href="https://investigativereportingworkshop.org/2019/07/10/introducing-the-accountability-project-a-new-resource-for-public-data/">accountability project</a> at the Investigative Reporting Workshop.</p>
+<p>Hi! Welcome to my data journalism R cheat sheet for cleaning and wrangling data. Just like the <a href="https://rstudio.com/resources/cheatsheets/">R cheat sheet resources</a> of package-based cheat sheets, Journalists have put out cheat sheets before, like <a href="https://mjwebster.github.io/DataJ/R/Rcheatsheet.html">MaryJo Webster’s R cheat sheet</a>. Hat tip to her and her <a href="http://mjwebster.github.io/DataJ/">amazing collection of data journalism resources</a>!</p>
+<p>I use this cheat sheet as an roadmap to functions I will likely encounter and use when I am cleaning data, so I am hoping that it can save you some time googling around. Most of the functions listed here are what I collected when cleaning data at the NICAR data library and for the <a href="https://investigativereportingworkshop.org/2019/07/10/introducing-the-accountability-project-a-new-resource-for-public-data/">accountability project</a> at the Investigative Reporting Workshop.</p>
 <div id="whats-this-for" class="section level1">
 <h1>What’s this for?</h1>
 <p>Much as I use data cleaning functions on a regular basis, the syntax or function names sometimes get fuzzy every once in a while. So I have organized some most frequently used functions to help refresh memories for certain goals in data processing and also pitfalls! Here they are.</p>
 </div>
 <div id="a-word-about-programming" class="section level1">
 <h1>A word about programming</h1>
-<p>I always think the most important thing to know about functions and to tap into their strengths is to understand what you’re dealing with. When I can’t write clean code and get it to work, I always take out my pen and pad and jot down what I want to achieve and the end products I wish to have. This basically helps me get a grasp of the object at hand, and break them down into the smallest unit possible, and how these units can form the end products you want. For example, are you trying to modify a column or add a new column based on an existing column, which are zipped vectors made up of individual elements?</p>
+<p>I always think the most important thing to know about functions and to tap into their strengths is to understand what you’re dealing with, i.e. <a href="http://adv-r.had.co.nz/Data-structures.html">data structures</a>. When I can’t write clean code and get it to work, I always take out my pen and pad and jot down what I want to achieve and the end products I wish to have. This basically helps me get a grasp of the object at hand, and break them down into the smallest unit possible, and how these units can form the end products you want. For example, are you trying to modify a column or add a new column based on an existing column, which are zipped vectors made up of individual elements? That’s probably why the <code>length(df)</code>returns the number of columns.</p>
 <p>There are, of course, more than one way to <strong>let’s not skin a cat</strong>! For example, picture a jumbled field of last name, first name. If you wish to separate the names into different columns, you can either use the <code>separate()</code> function to split up the column by a certain character, or you can use regular expression to capture whatever goes before the comma with <code>str_match(&quot;^(.+),&quot;)[,2]</code>, and whatever comes after as <code>str_match(&quot;,(.+)$&quot;)[,2]</code>. Pick and choose as you wish!</p>
-<p>This cheat sheet doesn’t cover the nuts and bolts of R, for which I highly recommend Andrew Ba Tran’s tutorial <a href="http://learn.r-journalism.com/en/introduction/">Journalism with R</a>.</p>
+<p>This cheat sheet doesn’t cover the nuts and bolts of R, for which I highly recommend Andrew Ba Tran’s amazing tutorial <a href="http://learn.r-journalism.com/en/introduction/">Journalism with R</a>.</p>
 </div>
 <div id="something-about-libraries" class="section level1">
 <h1>Something about libraries</h1>
-<p>Since other people have spent all this time writing functions and packaged them, we use their functions by calling the package names (which may take developers a lot of time to come up with) first in the R console or scripts. It’s important to declare the packages used at the top of your R Markdown or R scripts file, especially if you knit the file (in order to generate a standalone html for the Rmd in a readable format), otherwise it will throw a bunch of errors. This also assumes that you have the packages installed already. If you wish to install new packages, use <code>install.packages(&quot;packagename&quot;)</code> first or use the packages pane to manage your packages (by default, the lower right-hand side pane). If you are trying to install a package that is not on CRAN yet and couldn’t be installed by using the <code>install.packages(&quot;packagename&quot;)</code> function, use the <a href="https://github.com/r-lib/remotes">remotes</a> package’s <code>remotes::install_github(&quot;r-lib/remotes&quot;)</code>. The double colons help you run a function from a certain package, use <code>{package_name}::{function_name}</code>. I am sure that you have figured out that <code>remotes</code> is on CRAN, so that it can be installed, with the command <code>install.packages('remotes')</code>.</p>
-<pre class="r"><code>library(tidyverse)</code></pre>
+<p>Since other people have spent all this time writing functions and packaged them, we use their functions by calling the package names (which may take developers a lot of time to come up with) first in the R console or scripts. It’s important to declare the packages used at the top of your R Markdown or R scripts file, especially if you knit the file (in order to generate a standalone html for the Rmd in a readable format), otherwise it will throw a bunch of errors. This also assumes that you have the packages installed already. If you wish to install new packages, use <code>install.packages(&quot;packagename&quot;)</code> first or use the packages pane to manage your packages (by default, the lower right-hand side pane). If you are trying to install a package that is not on CRAN yet and couldn’t be installed by using the <code>install.packages(&quot;packagename&quot;)</code> function, use the <a href="https://github.com/r-lib/remotes">remotes</a> package’s <code>remotes::install_github(&quot;r-lib/remotes&quot;)</code>. The double colons help you run a function from a certain package, use <code>{package_name}::{function_name}</code>. I am sure that you have figured out that <code>remotes</code> is on CRAN, so that it can be installed, with the command <code>install.packages('remotes')</code>. The <code>tidyverse</code> package solves most of the problems related to data cleaning. It includes all these packages:</p>
+<pre class="r"><code>library(tidyverse)
+tidyverse_packages()
+#&gt;  [1] &quot;broom&quot;       &quot;cli&quot;         &quot;crayon&quot;      &quot;dplyr&quot;       &quot;dbplyr&quot;     
+#&gt;  [6] &quot;forcats&quot;     &quot;ggplot2&quot;     &quot;haven&quot;       &quot;hms&quot;         &quot;httr&quot;       
+#&gt; [11] &quot;jsonlite&quot;    &quot;lubridate&quot;   &quot;magrittr&quot;    &quot;modelr&quot;      &quot;purrr&quot;      
+#&gt; [16] &quot;readr&quot;       &quot;readxl\n(&gt;=&quot; &quot;reprex&quot;      &quot;rlang&quot;       &quot;rstudioapi&quot; 
+#&gt; [21] &quot;rvest&quot;       &quot;stringr&quot;     &quot;tibble&quot;      &quot;tidyr&quot;       &quot;xml2&quot;       
+#&gt; [26] &quot;tidyverse&quot;</code></pre>
 </div>
 <div id="something-about-functions" class="section level1">
 <h1>Something about functions</h1>
 <p>Functions are just objects. They exist in those packages! So if you want ot know more about functions themselves, call them by their names, without parathenses in the console. For the documentation, type “?” followed by the function name, will give you its documentation laid out in the help window. Try <code>?str_split</code>. For how the function was written to make sense of how it’s executed, simply type the name of the function. Like <code>str_split</code>. Further Readings: <a href="https://www.stat.berkeley.edu/~statcur/Workshop2/Presentations/functions.pdf">Introduction to the R Language Functions, Berkeley Workshop</a></p>
-<div id="writing-functions-and-loops" class="section level2">
-<h2>Writing Functions and loops</h2>
+<div id="writing-fnctions-and-loops" class="section level2">
+<h2>Writing fnctions and loops</h2>
 <p>Here’s <a href="https://swcarpentry.github.io/r-novice-inflammation/02-func-R/">some function help</a>. The basic syntax of a function is</p>
 <pre class="r"><code>f &lt;- function(&lt;arguments&gt;) {
 ## Do something interesting
@@ -1652,9 +1659,11 @@ for (i in seq_along(df)) {            # 2. sequence
 </div>
 <div id="function-executionorder-arguments" class="section level2">
 <h2>Function execution(order, arguments)</h2>
-<p>Computer reads scripts in a certain order and it can get confused when you have many arguments. To help organize things, and make your code less confusing for machine and humans to read by bracketing code chunks you wish to execute first <code>{}</code>.</p>
-<p>A common usage revolves around <code>str_match_all</code>, a function to find strings matching a pattern and whose results is a nested list. In order to access individual capture groups, you will use <code>str_match_all(data,patter)[,2]</code>. When you wish to do something about the result, you would likely need to wrap it in brackets like <code>{str_match_all(data,patter)[,2]}</code>, so that R knows to treat it as a whole.</p>
-<p>There are certain operators in R that streamline code executation and saves you some typing. For example, <code>.</code> can represent the object being passed into a function. For example, if you wish to concatenate a vector with other strings, you can use the syntax <code>df$col %&gt;% str_c(&quot;before&quot;,.,&quot;after&quot;)</code> to specify the order of the string placement. Learn more about the <code>magrittr</code>’s <code>.</code> placeholder <a href="https://stackoverflow.com/questions/54815607/r-combinations-with-dot-and-pipe-operator">here</a>.</p>
+<p>Computer reads scripts in a certain order and it can get confused when you have many arguments. To help organize things, and make your code less confusing for machine and humans to read, you can bracket code chunks you wish to execute first with <code>()</code> or <code>{}</code>.</p>
+<p>A common usage: you have a numeric variable <code>x=1</code>, and you wish to do some calculations on it, like <code>x+1</code>, and use the <code>:</code> to populate all the numbers between <code>x+1</code> and 15. <code>x+1:15</code> won’t give you the result you want, but return anything between 2 and 16. That’s because R treats x:15 as a vector and applies the <code>+1</code> to everything in this vector. You can solve this by specifying <code>{x+1}:15</code>, so that R knows to treat everything wrapped between the brackets as a whole.</p>
+<p>There are certain operators in R that streamline code executation and saves you some typing. For example, <code>.</code> can represent the object being passed into a function. For example, if you wish to concatenate a vector with other strings, you can use the syntax <code>df$col %&gt;% str_c(&quot;before&quot;,.,&quot;after&quot;)</code> to specify the order of the string placement. Learn more about the <code>magrittr</code>’s <code>.</code> placeholder <a href="https://stackoverflow.com/questions/54815607/r-combinations-with-dot-and-pipe-operator">here</a>. ## Data import Very useful references for understanding <a href="https://r4ds.had.co.nz/data-import.html#data-import">data type</a> and <a href="http://adv-r.had.co.nz/Data-structures.html">data structure</a>.<br />
+<a href="http://learn.r-journalism.com/en/importing_exporting/">Andrew’s data import/export tutorial</a> shows you how to import and later export most types of data files. <a href="https://rstudio.com/wp-content/uploads/2019/01/Cheatsheets_2019.pdf#page=9">R’s tidyverse cheat sheet</a> also offers a comprehensive view of reading data, and the how you can tap into the functionalities of <a href="https://rstudio.com/wp-content/uploads/2019/01/Cheatsheets_2019.pdf#page=9">tibble</a> (a type of data frame) for your tables.</p>
+<p>You’re now ready to use functions to solve problems like these:</p>
 </div>
 <div id="better-printing-inspection" class="section level2">
 <h2>Better printing &amp; Inspection</h2>
@@ -1711,10 +1720,8 @@ wy %&gt;% filter() %&gt;% glimpse()
 </tr>
 </tbody>
 </table>
-<p>You’re now ready to use functions to solve problems like these:</p>
-</div>
-<div id="dealing-with-nas" class="section level2">
-<h2>Dealing with NAs</h2>
+<div id="dealing-with-nas" class="section level3">
+<h3>Dealing with NAs</h3>
 <table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1747,6 +1754,7 @@ dplyr
 filter(!is.na(colname))
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
+This has the effect of filter(!is.na(colname)==TRUE)
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
@@ -1785,88 +1793,15 @@ drop_na() is column agnostic so any columns containing NA values will be dropped
 <a href="https://stackoverflow.com/questions/26665319/removing-na-in-dplyr-pipe" class="uri">https://stackoverflow.com/questions/26665319/removing-na-in-dplyr-pipe</a>
 </td>
 </tr>
-</tbody>
-</table>
-</div>
-<div id="data-table-summary" class="section level2">
-<h2>Data table summary</h2>
-<table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-function
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-package
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-syntax
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-notes
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-references
-</th>
-</tr>
-</thead>
-<tbody>
 <tr>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-find out unique values and frequencies
-</td>
-<td style="text-align:left;width: 100px; max-width: 100px; ">
-tidyverse, base
-</td>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-table()/tabyl()
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-basically gives you a frequency table
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-min, max, mean, quantiles
-</td>
-<td style="text-align:left;width: 100px; max-width: 100px; ">
-base
-</td>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-summary()
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-add a column counting the observations of another column
+turn values into NA
 </td>
 <td style="text-align:left;width: 100px; max-width: 100px; ">
 dplyr
 </td>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-mtcars %&gt;% add_count(cyl)
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-add_count() is a short-hand for group_by() + add_tally() Also you won’t need mutate()
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-Get the means and sums of rows and columns
-</td>
-<td style="text-align:left;width: 100px; max-width: 100px; ">
-base
-</td>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-rowSums (x, na.rm = FALSE, dims = 1)
+na_if(df$col)
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
@@ -1876,8 +1811,8 @@ rowSums (x, na.rm = FALSE, dims = 1)
 </tbody>
 </table>
 </div>
-<div id="modify-strings" class="section level2">
-<h2>Modify Strings</h2>
+<div id="modify-strings" class="section level3">
+<h3>Modify Strings</h3>
 <table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1899,6 +1834,21 @@ references
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+change case
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+stringr, base
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+str_toupper()/toupper() str_tolower()/tolower()
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
 <tr>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
 ignore case
@@ -1925,10 +1875,12 @@ base, stringr
 RETA2016_negative &lt;- mutate_if(as_tibble(reta2016_clean), is.character, str_replace_all, pattern = “J”, replacement = “-1”) la_lobby &lt;- la_lobby %&gt;% mutate(lobbyist_name_clean = str_remove(LobbyistName1, “MRS.\\s|MR.\\s|MS.\\s|MISS\\s|DR.\\s”))
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
-gsub() is the base R version. When trying to replace or remove with multiple patterns, use regex “|” . Otherwise, the function matches the first element in the pattern against the first element of string vector, etc. Therefore, you could “subtract” the content of one column from another in effect. df &lt;- df %&gt;% mutate(statezip = str_remove(df<span class="math inline"><em>c</em><em>i</em><em>t</em><em>y</em><em>s</em><em>t</em><em>a</em><em>t</em><em>e</em><em>z</em><em>i</em><em>p</em>, <em>d</em><em>f</em></span>city))
+gsub() is the base R version. When trying to replace or remove with multiple patterns, use regex “|” . Otherwise, the function matches the first element in the pattern against the first element of string vector, etc. Therefore, you could “subtract” the content of one column from another in effect with . df &lt;- df %&gt;% mutate(statezip = str_remove(df$citystatezip, df$city)). str_replace_all will replace all the matches while str_replace will only replace the first match.
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
-<a href="https://community.rstudio.com/t/understanding-the-use-of-str-replace-all-with-multiple-patterns/1849" class="uri">https://community.rstudio.com/t/understanding-the-use-of-str-replace-all-with-multiple-patterns/1849</a> <a href="https://stackoverflow.com/questions/29036960/remove-multiple-patterns-from-text-vector-r" class="uri">https://stackoverflow.com/questions/29036960/remove-multiple-patterns-from-text-vector-r</a> <a href="https://community.rstudio.com/t/understanding-the-use-of-str-replace-all-with-multiple-patterns/1849" class="uri">https://community.rstudio.com/t/understanding-the-use-of-str-replace-all-with-multiple-patterns/1849</a>
+<p><a href="https://community.rstudio.com/t/understanding-the-use-of-str-replace-all-with-multiple-patterns/1849" class="uri">https://community.rstudio.com/t/understanding-the-use-of-str-replace-all-with-multiple-patterns/1849</a></p>
+<p><a href="https://stackoverflow.com/questions/29036960/remove-multiple-patterns-from-text-vector-r" class="uri">https://stackoverflow.com/questions/29036960/remove-multiple-patterns-from-text-vector-r</a></p>
+<a href="https://community.rstudio.com/t/understanding-the-use-of-str-replace-all-with-multiple-patterns/1849" class="uri">https://community.rstudio.com/t/understanding-the-use-of-str-replace-all-with-multiple-patterns/1849</a>
 </td>
 </tr>
 <tr>
@@ -2046,9 +1998,9 @@ separate different parts of the string with commas
 </tbody>
 </table>
 </div>
-<div id="index-subsetting" class="section level2">
-<h2>Index &amp; Subsetting</h2>
-It is very <em>important</em> to note that negative index does not work the same way as the inverse order in Python syntax. In R, the minus sign (-) means to exclude a certain element. As a result, you can use <code>vector[length(vector)]</code> to access the last element of a vector.
+<div id="index-subsetting" class="section level3">
+<h3>Index &amp; subsetting</h3>
+It is very <em>important</em> to note that negative index does not work the same way as the inverse order in Python syntax. In R, the minus sign (-) means to exclude a certain element. As a result, you can use <code>vector[length(vector)]</code> to access the last element of a vector. R for Data Science has a great chapter on vector and list indexing and used a superb analogy of <a href="https://r4ds.had.co.nz/vectors.html">a pepper shaker</a>.
 <table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2087,7 +2039,7 @@ a &lt;- 1:120 b &lt;- a[seq(1, length(a), 6)]
 </tr>
 <tr>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-get the index of a data frame/vector
+get the position of a column named “B” in a data frame/vector
 </td>
 <td style="text-align:left;width: 100px; max-width: 100px; ">
 base
@@ -2122,8 +2074,8 @@ match returns a vector of the positions of (first) matches of its first argument
 </tbody>
 </table>
 </div>
-<div id="columns" class="section level2">
-<h2>Columns</h2>
+<div id="making-a-dataframe" class="section level3">
+<h3>Making a dataframe</h3>
 <table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2145,6 +2097,111 @@ references
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+Take a sequence of vector, matrix or data-frame arguments and combine by columns or rows
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+base
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+stations &lt;- cbind(stations, geo) OR bind_cols()
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+string together two dataframes/vectors vertically by binding rows
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+dplyr, base
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+bind_rows() OR rbind(a = 1, b = 1:3)
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+two dataframes need to have the same number of columns, or the longer vector should be a multiple of short vector’s length
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+create a dataframe from vectors
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+base, dplyr
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+<p>tibble(), data.frame(),</p>
+tibble(col1 = c(1,2,3), name = c(“A”,“B”,“C”))
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+for tibble(), stringAsFactors is set to F! On the left is the column names, and on the right is the vector that will be assigned to the column. Data frames are essentially columns (vectors) bound together.
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="columns" class="section level3">
+<h3>Columns</h3>
+<table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+function
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+package
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+syntax
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+notes
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+references
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+select a column whose name is…
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+dplyr
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+df$colname, or df[[“colname”]] OR pull(df, col)
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+pull() can help turn a one-column data frame into a vector. To select multiple, use df$[c(“col1”, “col2”]
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+select a column whose index is n
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+df[[n]] OR pull(df,n)
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+without double brackets, the <a href="#section-1"></a> index will slice the tibble into another tibble
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
 <tr>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
 filtering a dataframe based on certain conditions of columns
@@ -2172,7 +2229,6 @@ base
 MO_offense &lt;- rename(MO_offense, Off.Age = Offender.Age.at.Time.of.Offense)
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
-MO_sex_Offender.Rmd
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
@@ -2247,42 +2303,15 @@ as_date(x, …)
 <a href="https://github.com/irworkshop/accountability_datacleaning/blob/campfin/R_campfin/ct/expends/docs/ct_expends_diary.md" class="uri">https://github.com/irworkshop/accountability_datacleaning/blob/campfin/R_campfin/ct/expends/docs/ct_expends_diary.md</a>
 </td>
 </tr>
-</tbody>
-</table>
-</div>
-<div id="making-a-dataframe" class="section level2">
-<h2>Making a dataframe</h2>
-<table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-function
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-package
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-syntax
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-notes
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-references
-</th>
-</tr>
-</thead>
-<tbody>
 <tr>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-Take a sequence of vector, matrix or data-frame arguments and combine by columns or rows
+convert to column types
 </td>
 <td style="text-align:left;width: 100px; max-width: 100px; ">
-base
+dplyr
 </td>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-<p>stations &lt;- cbind(stations, geo)</p>
-merge
+as.numeric(df$col) as.character(df$col)
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
@@ -2291,33 +2320,15 @@ merge
 </tr>
 <tr>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-string together two dataframes/vectors vertically by binding rows
+convert excel numbers to date
 </td>
 <td style="text-align:left;width: 100px; max-width: 100px; ">
-base
+janitor
 </td>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-rbind(a = 1, b = 1:3)
+excel_numeric_to_date(df$col, date_system = “modern”)
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
-two dataframes need to have the same number of columns, or the longer vector should be a multiple of short vector’s length
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-create a dataframe from vectors
-</td>
-<td style="text-align:left;width: 100px; max-width: 100px; ">
-base, dplyr
-</td>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-<p>tibble(), data.frame(),</p>
-kable( x = tibble(what_it_does = as.character(My_R_Cheatsheet [cutoff[length(cutoff)]+1:length(My_R_Cheatsheet),1]), on_the_screen = as.character(My_R_Cheatsheet [cutoff[length(cutoff)]+1:length(My_R_Cheatsheet),2]), you_will_type = as.character(My_R_Cheatsheet [cutoff[length(cutoff)]+1:length(My_R_Cheatsheet),3])))
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-for tibble(), stringAsFactors is set to F! On the left is the column names, and on the right is the vector that will be assigned to the column. Dataframes are essentially rows (vectors) bound together.
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
@@ -2325,8 +2336,8 @@ for tibble(), stringAsFactors is set to F! On the left is the column names, and 
 </tbody>
 </table>
 </div>
-<div id="ordering" class="section level2">
-<h2>Ordering</h2>
+<div id="ordering" class="section level3">
+<h3>Ordering</h3>
 <table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2356,7 +2367,7 @@ sort a vector or factor into a descending or ascending order
 base
 </td>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-_sort(x, decreasing = FALSE, …)
+sort(x, decreasing = FALSE, …)
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
@@ -2402,7 +2413,7 @@ Get the first n rows of a dataframe
 dplyr
 </td>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-top_n()
+df %&gt;% top_n(10)
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
@@ -2427,8 +2438,8 @@ head()/tail()
 </tbody>
 </table>
 </div>
-<div id="set-operations-joins" class="section level2">
-<h2>Set Operations &amp; Joins</h2>
+<div id="reshape-data-frame" class="section level3">
+<h3>Reshape data frame</h3>
 <table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2452,59 +2463,104 @@ references
 <tbody>
 <tr>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-find out elements in x that are not in y
+turn wide tables to long tables
 </td>
 <td style="text-align:left;width: 100px; max-width: 100px; ">
-base
+dplyr
 </td>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-setdiff(x, y)
+gather()
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
-setdiff() removes duplicates!
+Andrew’s tutorial says it all.
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+<a href="https://learn.r-journalism.com/en/wrangling/tidyr_joins/tidyr-joins/" class="uri">https://learn.r-journalism.com/en/wrangling/tidyr_joins/tidyr-joins/</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+turn long tables to wide tables
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+dplyr
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+spread()
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+<a href="https://learn.r-journalism.com/en/wrangling/tidyr_joins/tidyr-joins/" class="uri">https://learn.r-journalism.com/en/wrangling/tidyr_joins/tidyr-joins/</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+seperat one columns into two
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+dplyr
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+separate(data, col, into, sep = “[^[:alnum:]] +”, remove = TRUE, convert = FALSE, extra = “warn”, fill = “warn”, …)
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+<a href="https://rstudio.com/wp-content/uploads/2019/01/Cheatsheets_2019.pdf#page=9" class="uri">https://rstudio.com/wp-content/uploads/2019/01/Cheatsheets_2019.pdf#page=9</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+unite two columns into one
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+dplyr
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+unite()
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+<a href="https://rstudio.com/wp-content/uploads/2019/01/Cheatsheets_2019.pdf#page=9" class="uri">https://rstudio.com/wp-content/uploads/2019/01/Cheatsheets_2019.pdf#page=9</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+separate elements in a column into rows with each individual element
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+dplyr
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+separate_rows()
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-vlookup - to look for corresponding values in a separate vector or data frame
+Makes each element of the list-column into its own row.
 </td>
 <td style="text-align:left;width: 100px; max-width: 100px; ">
+janitor
 </td>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-lookup(mtcars<span class="math inline"><em>c</em><em>a</em><em>r</em><em>b</em>, <em>s</em><em>o</em><em>r</em><em>t</em>(<em>u</em><em>n</em><em>i</em><em>q</em><em>u</em><em>e</em>(<em>m</em><em>t</em><em>c</em><em>a</em><em>r</em><em>s</em></span>carb)), c(“one”, “two”, “three”, “four”, “six”, “eight”))
+ia_lobby_cl &lt;- ia_lobby_cl %&gt;% mutate(new_lobbyists = str_split(lobbyists, pattern = “,”)) %&gt;% unnest_longer(new_lobbyists)
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
-The lookup() functions have a lot of restrictions, including the dataframe to be matched (by default, should be two columns). Also it seems to only work when the terms and key.match is unique. key.reassign let you map the results to whatever vector you wish to assign to the results. The example here appears to be more about reassigning and mapping than looking up for matching values. See documentation for more info.
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
-<a href="https://www.rdocumentation.org/packages/qdapTools/versions/1.3.3/topics/lookup" class="uri">https://www.rdocumentation.org/packages/qdapTools/versions/1.3.3/topics/lookup</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-Join two dataframes based on fuzzy matching
-</td>
-<td style="text-align:left;width: 100px; max-width: 100px; ">
-fuzzyjoin
-</td>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-stringdist_inner_join()
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-<p><a href="https://cran.r-project.org/web/packages/fuzzyjoin/README.html" class="uri">https://cran.r-project.org/web/packages/fuzzyjoin/README.html</a></p>
-<a href="https://www.r-bloggers.com/fuzzy-string-matching-a-survival-skill-to-tackle-unstructured-information/" class="uri">https://www.r-bloggers.com/fuzzy-string-matching-a-survival-skill-to-tackle-unstructured-information/</a>
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-<a href="https://github.com/dgrtwo/fuzzyjoin" class="uri">https://github.com/dgrtwo/fuzzyjoin</a>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="conditions" class="section level2">
-<h2>Conditions</h2>
+<div id="data-table-summary" class="section level3">
+<h3>Data table summary</h3>
 <table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2528,195 +2584,141 @@ references
 <tbody>
 <tr>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-Change columns based on certain conditions (data type)
-</td>
-<td style="text-align:left;width: 100px; max-width: 100px; ">
-dplyr
-</td>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-mutate_if(is_character, str_to_upper)
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-The _if() variants apply a predicate function (a function that # returns TRUE or FALSE) to determine the relevant subset of # columns.
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-<a href="https://stackoverflow.com/questions/42052078/correct-syntax-for-mutate-if" class="uri">https://stackoverflow.com/questions/42052078/correct-syntax-for-mutate-if</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-Test if characters are part of a string
-</td>
-<td style="text-align:left;width: 100px; max-width: 100px; ">
-base
-</td>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-grepl(value,chars, fixed=TRUE)
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-<a href="https://stackoverflow.com/questions/10128617/test-if-characters-are-in-a-string" class="uri">https://stackoverflow.com/questions/10128617/test-if-characters-are-in-a-string</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-count how many cases satisfy a condition
-</td>
-<td style="text-align:left;width: 100px; max-width: 100px; ">
-dplyr
-</td>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-<p>sum(pa$STATE != “PA”, na.rm = TRUE)</p>
-<p>or</p>
-pa %&gt;% filter(STATE != “PA”) %&gt;% count()
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-basically counting logical vector values
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-find elements in vector X that are not in Y
-</td>
-<td style="text-align:left;width: 100px; max-width: 100px; ">
-base
-</td>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-x[! (x %in% y)]
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-Be especially cautious with NAs! The rows evaluated to NAs would be retained!
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-<a href="https://statisticsglobe.com/setdiff-r-function/,https://www.youtube.com/watch?v=8hSYEXIoFO8" class="uri">https://statisticsglobe.com/setdiff-r-function/,https://www.youtube.com/watch?v=8hSYEXIoFO8</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-Change variable strings
-</td>
-<td style="text-align:left;width: 100px; max-width: 100px; ">
-dplyr
-</td>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-mutate (variables = case_when (variable ==, ~))
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-case_when only supports turning certain cells into a set string, but if the cell is dependent on other variables, use an if_else() or ifelse() function is probably the best bet.
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-<a href="http://learn.r-journalism.com/en/mapping/static_maps/static-maps/" class="uri">http://learn.r-journalism.com/en/mapping/static_maps/static-maps/</a>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-Modify character strings based on variable conditions
+Get all the unique/distinct values of a column
 </td>
 <td style="text-align:left;width: 100px; max-width: 100px; ">
 dplyr, base
 </td>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-wy &lt;- wy %&gt;% mutate(city_clean = if_else(condition = match_distance &lt;=2, true = city_swap, false = city_raw)) OR ifelse()
+unique(df$column) OR distinct(df$column)
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
 </tr>
-</tbody>
-</table>
-</div>
-<div id="file-paths" class="section level2">
-<h2>File Paths</h2>
-<table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-function
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-package
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-syntax
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-notes
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-references
-</th>
-</tr>
-</thead>
-<tbody>
 <tr>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-List all the files under a directory
+count the number of instances for each distinct value
 </td>
 <td style="text-align:left;width: 100px; max-width: 100px; ">
-fs, base
+dplyr
 </td>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-<p>zip_files &lt;- dir_ls(raw_dir, glob = &quot;*.zip&quot; regexp = “expends.+”)</p>
-<p>OR</p>
-contrib_files &lt;- list.files(raw_dir, pattern = “.txt”, recursive = TRUE, full.names = TRUE)
+n_distinct(df$col, na.rm = TRUE)
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
-<p>Recursive is very important! It determines if the search will go deeper into sub-directories.</p>
-<p>glob is also an important notion. A wildcard aka globbing pattern (e.g. *.csv) passed on to grep() to filter paths</p>
-The products of dir_ls() are “fs_path” named“character” objects while list.files() returns vectors. The defaults are also different.
+many functions have na.rm = T/F arguments. Here it’s set to TRUE as a demo, but in many cases you would want to set it to F too, depending on if you wish to include the NAs.
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
-<a href="https://github.com/irworkshop/accountability_datacleaning/blob/campfin/R_campfin/pa/expends/pa_expends_diary.md" class="uri">https://github.com/irworkshop/accountability_datacleaning/blob/campfin/R_campfin/pa/expends/pa_expends_diary.md</a>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-Make a new directory
+A gilmpse of your data
 </td>
 <td style="text-align:left;width: 100px; max-width: 100px; ">
-fs
+tibble,base
 </td>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-<p>raw_dir &lt;- here(“pa”, “contribs”, “data”, “raw”)</p>
-dir_create(raw_dir)
+glimpse(df) OR str(df)
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
+glimpse() usually offers better and more complete printout.
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-Construct the path to a file from components in a platform-independent way
+find out unique values and frequencies of a vector.
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+janitor, base
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+table()/tabyl()
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+basically gives you a frequency table. See count() for application in a data frame
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+find out unique values and frequencies of a column in a dataframe.
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+dplyr
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+count(df, column, sort = T)
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+When sort = T, will return the list in descending order
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+min, max, mean, quantiles
 </td>
 <td style="text-align:left;width: 100px; max-width: 100px; ">
 base
 </td>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-file.path(‘testdir2’, ‘testdir3’)
+summary()
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
-That way you don’t really care about the “&quot; or”/&quot;
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-Get the file info
+add a column counting the observations of another column
 </td>
 <td style="text-align:left;width: 100px; max-width: 100px; ">
-fs
+dplyr
 </td>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-file.info(“your_file”)$mtime
+mtcars %&gt;% add_count(cyl)
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
-This syntax gives you the last modified time of a file
+add_count() is a short-hand for group_by() + add_tally() Also you won’t need mutate()
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+Get the means and sums of rows and columns
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+base
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+rowSums (x, na.rm = FALSE, dims = 1)
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+pivot table
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+dplyr
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+pivot_table &lt;- df %&gt;% group_by(column) %&gt;% summarize (mean = mean(another_column), count = n())
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+group_by(df, column) %&gt;% summarize( count = n(), mean = mean()) frequently is combined with %&gt;% arrange(desc()) and specify the new summary column you created. the n() achieves similar effect as df %&gt;% count(column).
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
@@ -2724,66 +2726,8 @@ This syntax gives you the last modified time of a file
 </tbody>
 </table>
 </div>
-<div id="batch-processing" class="section level2">
-<h2>Batch processing</h2>
-<table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-function
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-package
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-syntax
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-notes
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
-references
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-Read multiple csv into one master csv
-</td>
-<td style="text-align:left;width: 100px; max-width: 100px; ">
-vroom
-</td>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-vroom::vroom(files)
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-apply a function to multiple elements
-</td>
-<td style="text-align:left;width: 100px; max-width: 100px; ">
-purr
-</td>
-<td style="text-align:left;width: 50px; max-width: 50px; ">
-dir_ls(path = raw_dir, glob = &quot;*.csv&quot;) %&gt;% map( read_delim, args)
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-map() returns a list, but you can specify vector types with map_dbl() or map_char(). Map_depth() is very helpful, especially if you are working with nested list and wish to flatten lists
-</td>
-<td style="text-align:left;width: 200px; max-width: 200px; ">
-<a href="https://r4ds.had.co.nz/iteration.html#mapping-over-multiple-arguments" class="uri">https://r4ds.had.co.nz/iteration.html#mapping-over-multiple-arguments</a>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="ggplot2" class="section level2">
-<h2>ggplot2</h2>
+<div id="ggplot2" class="section level3">
+<h3>ggplot2</h3>
 <table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2865,8 +2809,432 @@ scale_x_discrete(labels = wrap_format(10))
 </tbody>
 </table>
 </div>
+<div id="file-paths" class="section level3">
+<h3>File Paths</h3>
+<table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+function
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+package
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+syntax
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+notes
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+references
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+List all the files under a directory
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+fs, base
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+<p>zip_files &lt;- dir_ls(raw_dir, glob = &quot;*.zip&quot; regexp = “expends.+”)</p>
+<p>OR</p>
+contrib_files &lt;- list.files(raw_dir, pattern = “.txt”, recursive = TRUE, full.names = TRUE)
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+<p>Recursive is very important! It determines if the search will go deeper into sub-directories.</p>
+<p>glob is also an important notion. A wildcard aka globbing pattern (e.g. *.csv) passed on to grep() to filter paths</p>
+The products of dir_ls() are “fs_path” named“character” objects while list.files() returns vectors. The defaults are also different.
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+<a href="https://github.com/irworkshop/accountability_datacleaning/blob/campfin/R_campfin/pa/expends/pa_expends_diary.md" class="uri">https://github.com/irworkshop/accountability_datacleaning/blob/campfin/R_campfin/pa/expends/pa_expends_diary.md</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+Make a new directory
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+here, fs
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+<p>raw_dir &lt;- here(“pa”, “contribs”, “data”, “raw”)</p>
+dir_create(raw_dir)
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+dir_create() is powerful when combined with the here package. here() doesn’t really create the directory
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+<a href="https://github.com/r-lib/here" class="uri">https://github.com/r-lib/here</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+Construct the path to a file from components in a platform-independent way
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+base
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+file.path(‘testdir2’, ‘testdir3’)
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+That way you don’t really care about the “&quot; or”/&quot;
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+Get the file info
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+fs
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+file.info(“your_file”)$mtime
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+This syntax gives you the last modified time of a file
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="set-operations-joins" class="section level3">
+<h3>Set operations &amp; joins</h3>
+<table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+function
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+package
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+syntax
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+notes
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+references
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+Test if an element is in a vector
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+base
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+x %in% valid_city
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+passing in two vectors will give you a logial vector. It is useul in specifying conditions for filtering. Similar to the IN statement in SQL.
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+Test if an element is not in a vector
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+campfin
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+x %out% valid_city
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+it is !%in%
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+find out how many elements of a vector are in or out of another vector
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+campfin
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+count_in(x,y, na.rm = T) count_out(x,y, na.rm = F) prop_in(x,y, na.rm = T) prop_out(x,y, na.rm = T)
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+campfin is a package written by my colleague Kiernan Nicholls at IRW, yay! count_in() returns the number, and prop_in() returns the percentage. The package incorporate smany data insepction functionalities wrapped in easy functions like this one. It also does a lot of heavy lifting for normalizing address, city, state, zip and so on.
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+find out elements in x that are not in y
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+base
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+setdiff(x, y) OR anti_join(x,y)
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+setdiff() removes duplicates! Order is important!
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+join two dataframes based on matching column or columns
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+dplyr
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+ia_lobby_cl &lt;- ia_lobby_cl %&gt;%left_join(zipcodes, by = c(“zip_norm” = “zip”, “city_norm” = “city”))
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+left_join(), right_join(), inner_join(), full_join(). Order is important. if the columns in two dfs have the same name, the by statement can just be by = “state”.
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+<a href="http://www.datasciencemadesimple.com/join-in-r-merge-in-r/" class="uri">http://www.datasciencemadesimple.com/join-in-r-merge-in-r/</a> <a href="https://learn.r-journalism.com/en/wrangling/tidyr_joins/tidyr-joins/" class="uri">https://learn.r-journalism.com/en/wrangling/tidyr_joins/tidyr-joins/</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+vlookup - to look for corresponding values in a separate vector or data frame
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+left_join(zipcodes, by = c(“zip_norm” = “zip”, “city_norm” = “city”))
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+The lookup() functions have a lot of restrictions, including the dataframe to be matched (by default, should be two columns). Also it seems to only work when the terms and key.match is unique. key.reassign let you map the results to whatever vector you wish to assign to the results. The example here appears to be more about reassigning and mapping than looking up for matching values. See documentation for more info.
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+<a href="https://www.rdocumentation.org/packages/qdapTools/versions/1.3.3/topics/lookup" class="uri">https://www.rdocumentation.org/packages/qdapTools/versions/1.3.3/topics/lookup</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+Join two dataframes based on fuzzy matching
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+fuzzyjoin
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+stringdist_inner_join()
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+<p><a href="https://cran.r-project.org/web/packages/fuzzyjoin/README.html" class="uri">https://cran.r-project.org/web/packages/fuzzyjoin/README.html</a></p>
+<a href="https://www.r-bloggers.com/fuzzy-string-matching-a-survival-skill-to-tackle-unstructured-information/" class="uri">https://www.r-bloggers.com/fuzzy-string-matching-a-survival-skill-to-tackle-unstructured-information/</a>
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+<a href="https://github.com/dgrtwo/fuzzyjoin" class="uri">https://github.com/dgrtwo/fuzzyjoin</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="conditions" class="section level3">
+<h3>Conditions</h3>
+<table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+function
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+package
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+syntax
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+notes
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+references
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+Change columns based on certain conditions (data type)
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+dplyr
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+mutate_if(is_character, str_to_upper)
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+The mutate_if() variants apply a predicate function (a function that # returns TRUE or FALSE) to determine the relevant subset of # columns.
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+<a href="https://stackoverflow.com/questions/42052078/correct-syntax-for-mutate-if" class="uri">https://stackoverflow.com/questions/42052078/correct-syntax-for-mutate-if</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+Test if characters are part of a string
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+base
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+grepl(value,chars, fixed=TRUE)
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+<a href="https://stackoverflow.com/questions/10128617/test-if-characters-are-in-a-string" class="uri">https://stackoverflow.com/questions/10128617/test-if-characters-are-in-a-string</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+count how many cases satisfy a condition
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+dplyr
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+<p>sum(pa$STATE != “PA”, na.rm = TRUE)</p>
+<p>or</p>
+pa %&gt;% filter(STATE != “PA”) %&gt;% count()
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+basically counting logical vector values. count cases usually rely on the tallying of a logical vector.
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+find elements in vector X that are not in Y
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+base
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+x[! (x %in% y)]
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+Be especially cautious with NAs! The rows evaluated to NAs would be retained!
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+<a href="https://statisticsglobe.com/setdiff-r-function/" class="uri">https://statisticsglobe.com/setdiff-r-function/</a> <a href="https://www.youtube.com/watch?v=8hSYEXIoFO8" class="uri">https://www.youtube.com/watch?v=8hSYEXIoFO8</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+Change variable strings based on conditions
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+dplyr
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+mutate (variables = case_when (variable ==, ~))
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+case_when() only supports turning certain cells into a set string, but if the cell is dependent on other variables, use an if_else() or ifelse() function is probably the best bet.
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+<a href="http://learn.r-journalism.com/en/mapping/static_maps/static-maps/" class="uri">http://learn.r-journalism.com/en/mapping/static_maps/static-maps/</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+Modify character strings based on variable conditions
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+dplyr, base
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+wy &lt;- wy %&gt;% mutate(city_clean = if_else(condition = match_distance &lt;=2, true = city_swap, false = city_raw)) OR ifelse()
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="batch-processing" class="section level3">
+<h3>Batch processing</h3>
+<table class="table table-striped table-hover table-responsive table-condensed" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+function
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+package
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+syntax
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+notes
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;font-weight: bold;color: white !important;background-color: #8CBEED !important;">
+references
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+Read multiple csv into one master csv
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+vroom
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+vroom::vroom(files)
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+apply a function to multiple elements
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+purr
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+dir_ls(path = raw_dir, glob = &quot;*.csv&quot;) %&gt;% map( read_delim, args)
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+map() returns a list, but you can specify vector types with map_dbl() or map_char(). Map_depth() is very helpful, especially if you are working with nested list and wish to flatten lists
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+<a href="https://r4ds.had.co.nz/iteration.html#mapping-over-multiple-arguments" class="uri">https://r4ds.had.co.nz/iteration.html#mapping-over-multiple-arguments</a> <a href="https://rstudio.com/wp-content/uploads/2019/01/Cheatsheets_2019.pdf#page=14" class="uri">https://rstudio.com/wp-content/uploads/2019/01/Cheatsheets_2019.pdf#page=14</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div id="r-studio-shortcuts" class="section level2">
 <h2>R Studio Shortcuts</h2>
+<p>Here’s a comprehensive <a href="https://rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf">cheat sheet</a>.</p>
 <table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2890,7 +3258,7 @@ pipe
 %&gt;%
 </td>
 <td style="text-align:left;">
-shift + cmd + M
+shift + cmd/CTRL + M
 </td>
 </tr>
 <tr>
@@ -2900,7 +3268,7 @@ access a list of previous commands in the console
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
-cmd + uparrow
+CTRL/cmd + uparrow
 </td>
 </tr>
 <tr>
@@ -2912,7 +3280,10 @@ multiline comment
 </div>
 <div id="section" class="section level1">
 <h1></h1>
-# #
+</div>
+<div id="section-1" class="section level1">
+<h1></h1>
+#
 </td>
 <td style="text-align:left;">
 CTRL/cmd + SHIFT + C
@@ -2926,7 +3297,7 @@ assignment operator
 -&gt;
 </td>
 <td style="text-align:left;">
-Alt + (-)
+option/Alt + (-)
 </td>
 </tr>
 <tr>
@@ -2936,7 +3307,7 @@ shortcuts cheatsheet in R Studio
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
-shift + alt + K
+shift + option/alt + K
 </td>
 </tr>
 <tr>
@@ -2946,7 +3317,7 @@ Knit
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
-shift + cmd + K
+shift + cmd/ctrl + K
 </td>
 </tr>
 <tr>
@@ -2966,7 +3337,7 @@ Run current chunk
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
-shift + cmd + Enter
+shift + cmd/CTRL + Enter
 </td>
 </tr>
 <tr>
@@ -2976,7 +3347,7 @@ Unfold/fold outlines (the Rmd structure)
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
-shift + option + o
+shift + option/CTRL + o
 </td>
 </tr>
 <tr>
@@ -2986,7 +3357,7 @@ Jump to chunk (start of line)
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
-cmd + shift + option + J
+cmd/ctrl + shift + option/alt + J
 </td>
 </tr>
 <tr>
@@ -2996,7 +3367,17 @@ Next chunk
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
-cmd+pagedown
+cmd/ctrl+pagedown
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+stop current command
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+esc
 </td>
 </tr>
 </tbody>
@@ -3008,8 +3389,10 @@ cmd+pagedown
 <li>RMarkdown: <a href="https://bookdown.org/yihui/rmarkdown/html-document.html">knitr syntax</a>. This cheat sheet was originally a <a href="https://docs.google.com/spreadsheets/d/1A8dGFnnEHwiWOif9Eiejlsw3C29PvDM0lef4wMkFZAE/edit#gid=0">spreadsheet</a>, and you can learn about how I turned it into a rendered html page with the package <code>knitr</code> in the Rmd.</li>
 <li>Regex: <a href="https://github.com/gadenbuie/regexplain">regexplain package</a>: a handy tool for using regex in RStudio</li>
 <li>General R: <a href="https://r4ds.had.co.nz/">R for Data Science</a>: Needs no introduction? All the bread and butter of R.</li>
+<li>Simplify directory management: <a href="https://github.com/jennybc/here_here">Ode to the here package</a></li>
+<li>GitHub: [Using Git with RStudio][26]</li>
 </ul>
-<p>Feel free to use the cheat sheet whatever way you want. If there’s any R function you wish to add that could be helpful for data cleaning, please fill out this <a href="https://forms.gle/2jQJksuyrZJZJwVX6">google form</a> and I’ll add them to this thing.</p>
+<p>Feel free to use the cheat sheet however you want. It is definitely imperfect and not remotely all-encompassing or error-free. Please don’t hesitate to point out any mistakes in the explanation.If there’s any R function you wish to add that could be helpful for data cleaning, please fill out this <a href="https://forms.gle/2jQJksuyrZJZJwVX6">google form</a> and I’ll add them to this file.</p>
 </div>
 
 
