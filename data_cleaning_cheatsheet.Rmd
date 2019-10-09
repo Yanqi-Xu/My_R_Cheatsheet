@@ -4,8 +4,9 @@ author: "Yanqi Xu"
 date: "`r Sys.Date()`"
 output: 
   html_document:
-    mathjax: null
     theme: lumen
+    mathjax: null
+    md_extensions: -raw_tex-tex_math_dollars
     toc: true
     toc_float:
       collapsed: true
@@ -64,6 +65,7 @@ td{
 
 ```{r setup, include=FALSE}
 library(knitr)
+library(tidyverse)
 opts_chunk$set(
   eval = TRUE,
   echo = TRUE,
@@ -81,39 +83,50 @@ library(kableExtra)
 
 Hi! Welcome to my data journalism R cheat sheet for cleaning and wrangling data. Just like the [R cheat sheet resources][10] of package-based cheat sheets, Journalists have put out cheat sheets before, like [MaryJo Webster's R cheat sheet][03]. Hat tip to her and her [amazing collection of data journalism resources][04]!
 
-I use this cheat sheet as an index to functions I will likely encounter and use when I am cleaning data, so I am hoping that it can save you some time googling around. Most of the functions listed here are what I collected when cleaning data at the NICAR data library and for the [accountability project][14] at the Investigative Reporting Workshop.
+I use this cheat sheet as an roadmap to functions I will likely encounter and use when I am cleaning data, so I am hoping that it can save you some time googling around. Most of the functions listed here are what I collected when cleaning data at the NICAR data library and for the [accountability project][14] at the Investigative Reporting Workshop.
 
 # What's this for?
 Much as I use data cleaning functions on a regular basis, the syntax or function names sometimes get fuzzy every once in a while. So I have organized some most frequently used functions to help refresh memories for certain goals in data processing and also pitfalls! Here they are.
 
 # A word about programming
-I always think the most important thing to know about functions and to tap into their strengths is to understand what you're dealing with. When I can't write clean code and get it to work, I always take out my pen and pad and jot down what I want to achieve and the end products I wish to have. This basically helps me get a grasp of the object at hand, and break them down into the smallest unit possible, and how these units can form the end products you want. For example, are you trying to  modify a column or add a new column based on an existing column, which are zipped vectors made up of individual elements?
+I always think the most important thing to know about functions and to tap into their strengths is to understand what you're dealing with, i.e. [data structures][20]. When I can't write clean code and get it to work, I always take out my pen and pad and jot down what I want to achieve and the end products I wish to have. This basically helps me get a grasp of the object at hand, and break them down into the smallest unit possible, and how these units can form the end products you want. For example, are you trying to  modify a column or add a new column based on an existing column, which are zipped vectors made up of individual elements? That's probably why the `length(df)`returns the number of columns.
 
 There are, of course, more than one way to **let's not skin a cat**! For example, picture a jumbled field of last name, first name. If you wish to separate the names into different columns, you can either use the `separate()` function to split up the column by a certain character, or you can use regular expression to capture whatever goes before the comma with `str_match("^(.+),")[,2]`, and whatever comes after as  `str_match(",(.+)$")[,2]`. Pick and choose as you wish!
 
-This cheat sheet  doesn't cover the nuts and bolts of R, for which I highly recommend Andrew Ba Tran's tutorial [Journalism with R][02].
+This cheat sheet  doesn't cover the nuts and bolts of R, for which I highly recommend Andrew Ba Tran's amazing tutorial [Journalism with R][02].
 
 [02]: http://learn.r-journalism.com/en/introduction/
-[03]: https://mjwebster.github.io/DataJ/R/Rcheat sheet.html
+[03]: https://mjwebster.github.io/DataJ/R/Rcheatsheet.html
 [04]: http://mjwebster.github.io/DataJ/
 [05]: https://www.stat.berkeley.edu/~statcur/Workshop2/Presentations/functions.pdf
 [06]: https://github.com/r-lib/remotes
 [07]: https://swcarpentry.github.io/r-novice-inflammation/02-func-R/
 [08]: https://r4ds.had.co.nz/functions.html
 [09]: https://github.com/gadenbuie/regexplain
-[10]: https://rstudio.com/resources/cheat sheets/
+[10]: https://rstudio.com/resources/cheatsheets/
 [11]: https://stackoverflow.com/questions/54815607/r-combinations-with-dot-and-pipe-operator
 [12]: https://forms.gle/2jQJksuyrZJZJwVX6
 [13]: https://docs.google.com/spreadsheets/d/1A8dGFnnEHwiWOif9Eiejlsw3C29PvDM0lef4wMkFZAE/edit#gid=0
 [14]: https://investigativereportingworkshop.org/2019/07/10/introducing-the-accountability-project-a-new-resource-for-public-data/
 [15]: https://r4ds.had.co.nz/
 [16]: https://bookdown.org/yihui/rmarkdown/html-document.html
+[17]: https://github.com/jennybc/here_here
+[18]: https://rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf
+[19]: https://r4ds.had.co.nz/data-import.html#data-import
+[20]: http://adv-r.had.co.nz/Data-structures.html
+[21]: http://learn.r-journalism.com/en/importing_exporting/
+[22]: https://rstudio.com/wp-content/uploads/2019/01/Cheatsheets_2019.pdf#page=9
+[23]: https://rstudio.com/wp-content/uploads/2019/01/Cheatsheets_2019.pdf#page=9
+[24]: https://r4ds.had.co.nz/vectors.html
+[25]: https://cfss.uchicago.edu/setup/git-with-rstudio/
 # Something about libraries
 Since other people have spent all this time writing functions and packaged them, we use their functions by calling the package names (which may take developers a lot of time to come up with) first in the R console or scripts. It's important to declare the packages used at the top of your R Markdown or R scripts file, especially if you knit the file (in order to generate a standalone html for the Rmd in a readable format), otherwise it will throw a bunch of errors. 
 This also assumes that you have the packages installed already. If you wish to install new packages, use `install.packages("packagename")` first or use the packages pane to manage your packages (by default, the lower right-hand side pane). If you are trying to install a package that is not on CRAN yet and couldn't be installed by using the `install.packages("packagename")` function, use the [remotes][06] package's `remotes::install_github("r-lib/remotes")`. The double colons help you run a function from a certain package, use `{package_name}::{function_name}`. I am sure that you have figured out that `remotes` is on CRAN, so that it can be installed, with the command `install.packages('remotes')`. 
+The `tidyverse` package solves most of the problems related to data cleaning. It includes all these packages:
 
 ```{r}
 library(tidyverse)
+tidyverse_packages()
 ```
 # Something about functions
 Functions are just objects. They exist in those packages!
@@ -124,9 +137,12 @@ Further Readings:
 [Introduction to the R Language Functions, Berkeley Workshop][05]
 
 ```{r echo = FALSE}
-My_R_cheatsheet <- read_csv("My_R_cheatsheet.csv")
+My_R_cheatsheet <- read_csv("My_R_Cheatsheet.csv")
 
 headers <- My_R_cheatsheet %>% filter(rowSums(is.na(My_R_cheatsheet))==4)
+
+My_R_cheatsheet$`function` <- My_R_cheatsheet$`function` %>% 
+  str_replace_all("\\\\\\\\s", "\\\\\\\\\\\\\\\\s")
 
 headers <- headers %>% mutate(sections = coalesce(headers[[1]],headers[[3]]))
 # my original spreadsheet was created to include columns that will be turned into subheads of the documents
@@ -145,11 +161,11 @@ for(i in seq_along(cutoff)){
       references = My_R_cheatsheet$references[(cutoff[i]+1):(cutoff[i+1]-1)])
  all_tables[[i]] <- table
 }
-# this line prints out the sections in the rmd to copy from console
-# cat(str_c("### ", headers$sections, collapse = "\n"))
+# this line prints out the sections in the rmd to copy from console so I don't need to type or copy/paste similar functions
+# cat(str_c("### ", headers$sections,"\n```{recho=FALSE}\nprint_kable(",(1:length(all_tables)),")\n```\n",collapse = "\n"))
 ```
 
-## Writing Functions and loops
+## Writing fnctions and loops
 Here's [some function help][07]. The basic syntax of a function is 
 ```{r function syntax, eval=F}
 f <- function(<arguments>) {
@@ -169,6 +185,12 @@ Computer reads scripts in a certain order and it can get confused when you have 
 A common usage: you have a numeric variable `x=1`, and you wish to do some calculations on it, like `x+1`, and use the `:` to populate all the numbers between `x+1` and 15. `x+1:15` won't give you the result you want, but return anything between 2 and 16. That's because R treats x:15 as a vector and applies the `+1` to everything in this vector. You can solve this by specifying `{x+1}:15`, so that R knows to treat everything wrapped between the brackets as a whole.  
 
 There are certain operators in R that streamline code executation and saves you some typing. For example, `.` can represent the object being passed into a function. For example, if you wish to concatenate a vector with other strings, you can use the syntax `df$col %>% str_c("before",.,"after")` to specify the order of the string placement. Learn more about the `magrittr`'s `.` placeholder [here][11].
+## Data import
+Very useful references for understanding [data type][19] and [data structure][20].  
+[Andrew's data import/export tutorial][21] shows you how to import and later export most types of data files. 
+[R's tidyverse cheat sheet][23] also offers a comprehensive view of reading data, and the how you can tap into the functionalities of [tibble][22] (a type of data frame) for your tables.
+
+You're now ready to use functions to solve problems like these:  
 
 ## Better printing & Inspection
 ```{r echo=FALSE}
@@ -180,7 +202,7 @@ html_table_width <- function(kable_output, width){
 print_kable <- function (all_tables_i) {
     knitr::kable(
   x = all_tables[[all_tables_i]],
-    format = "html", 
+    format = "html", escape = T, 
   col.names = c("function", "package","syntax","notes","references")) %>% 
   kable_styling(bootstrap_options = c("striped", "hover","responsive","condensed"),fixed_thead = T) %>%  
     row_spec(0, bold = T, color = "white", background = "#8CBEED") %>% 
@@ -193,59 +215,77 @@ print_kable <- function (all_tables_i) {
 }
 print_kable(1)
 ```
-You're now ready to use functions to solve problems like these:
 
-## Dealing with NAs
-```{r echo=FALSE}
+### Dealing with NAs
+```{r echo=FALSE, results='asis'}
 print_kable(2)
 ```
-## Data table summary
+
+### Modify Strings
 ```{r echo=FALSE}
-print_kable(3)
-```
-## Modify Strings
-```{r echo=FALSE, results='asis'}
 print_kable(4)
 ```
-## Index & Subsetting
+
+### Index & subsetting
 It is very _important_ to note that negative index does not work the same way as the inverse order in Python syntax. In R, the minus sign (-) means to exclude a certain element. As a result, you can use `vector[length(vector)]` to access the last element of a vector.
-```{r echo=FALSE}
-print_kable(9)
-```
-## Columns
-```{r echo=FALSE}
-print_kable(8)
-```
-## Making a dataframe
-```{r echo=FALSE}
-print_kable(5)
-```
-## Ordering
-```{r echo=FALSE}
-print_kable(12)
-```
-## Set Operations & Joins
-```{r echo=FALSE}
+R for Data Science has a great chapter on vector and list indexing and used a superb analogy of [a pepper shaker][24].
+```{r echo=FALSE, results='asis'}
 print_kable(10)
 ```
-## Conditions
-```{r echo=FALSE}
-print_kable(11)
+
+### Making a dataframe
+```{r echo=FALSE, results='asis'}
+print_kable(5)
 ```
-## File Paths
-```{r echo=FALSE}
-print_kable(7)
+
+### Columns
+```{r echo=FALSE, results='asis'}
+print_kable(9)
 ```
-## Batch processing
-```{r echo=FALSE}
+
+### Ordering
+```{r echo=FALSE, results='asis'}
 print_kable(13)
 ```
-## ggplot2
-```{r echo=FALSE}
+
+### Reshape data frame
+```{r echo=FALSE, results='asis'}
 print_kable(6)
 ```
+
+### Data table summary
+```{r echo=FALSE, results='asis'}
+print_kable(3)
+```
+
+### ggplot2
+```{r echo=FALSE, results='asis'}
+print_kable(7)
+```
+
+### File Paths
+```{r echo=FALSE, results='asis'}
+print_kable(8)
+```
+
+### Set operations & joins
+```{r echo=FALSE, results='asis'}
+print_kable(11)
+```
+
+### Conditions
+```{r echo=FALSE, results='asis'}
+print_kable(12)
+```
+
+### Batch processing
+```{r echo=FALSE, results='asis'}
+print_kable(14)
+```
 ## R Studio Shortcuts
-```{r echo=FALSE}
+Here's a comprehensive [R Studio IDE cheat sheet][18].
+
+```{r echo=FALSE, results='asis'}
 kable(
 x = tibble(what_it_does = pull(My_R_cheatsheet[{cutoff[length(cutoff)]+1}:nrow(My_R_cheatsheet),1]),
        on_the_screen = pull(My_R_cheatsheet[{cutoff[length(cutoff)]+1}:nrow(My_R_cheatsheet),2]),
@@ -259,5 +299,7 @@ x = tibble(what_it_does = pull(My_R_cheatsheet[{cutoff[length(cutoff)]+1}:nrow(M
 This cheat sheet was originally a [spreadsheet][13], and you can learn about how I turned it into a rendered html page with the package `knitr` in the Rmd.
 * Regex: [regexplain package][09]: a handy tool for using regex in RStudio
 * General R: [R for Data Science][15]: Needs no introduction? All the bread and butter of R.
+* Simplify directory management: [Ode to the here package][17]
+* GitHub: [Using Git with RStudio][25]
 
-Feel free to use the cheat sheet whatever way you want. If there's any R function you wish to add that could be helpful for data cleaning, please fill out this [google form][12] and I'll add them to this thing.
+Feel free to use the cheat sheet however you want. It is definitely imperfect and not remotely all-encompassing or error-free. Please don't hesitate to point out any mistakes in the explanation.If there's any R function you wish to add that could be helpful for data cleaning, please fill out this [google form][12] and I'll add them to this file.
