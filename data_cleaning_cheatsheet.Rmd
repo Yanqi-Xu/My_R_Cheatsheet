@@ -86,8 +86,7 @@ Hi! Welcome to my data journalism R cheat sheet for cleaning and wrangling data.
 I use this cheat sheet as an roadmap to functions I will likely encounter and use when I am cleaning data, so I am hoping that it can save you some time googling around. Most of the functions listed here are what I collected when cleaning data at the NICAR data library and for the [accountability project][14] at the Investigative Reporting Workshop.
 
 # What's this for?
-Much as I use data cleaning functions on a regular basis, the syntax or function names sometimes get fuzzy every once in a while. So I have organized some most frequently used functions to help refresh memories for certain goals in data processing and also pitfalls! Here they are.
-
+Much as I use data cleaning functions on a regular basis, the syntax or function names sometimes get fuzzy every once in a while. So I have organized some most-frequently-used functions for certain goals in data processing and also pitfalls when using them! 
 # A word about programming
 I always think the most important thing to know about functions and to tap into their strengths is to understand what you're dealing with, i.e. [data structures][20]. When I can't write clean code and get it to work, I always take out my pen and pad and jot down what I want to achieve and the end products I wish to have. This basically helps me get a grasp of the object at hand, and break them down into the smallest unit possible, and how these units can form the end products you want. For example, are you trying to  modify a column or add a new column based on an existing column, which are zipped vectors made up of individual elements? That's probably why the `length(df)`returns the number of columns.
 
@@ -184,7 +183,8 @@ Computer reads scripts in a certain order and it can get confused when you have 
 
 A common usage: you have a numeric variable `x=1`, and you wish to do some calculations on it, like `x+1`, and use the `:` to populate all the numbers between `x+1` and 15. `x+1:15` won't give you the result you want, but return anything between 2 and 16. That's because R treats x:15 as a vector and applies the `+1` to everything in this vector. You can solve this by specifying `{x+1}:15`, so that R knows to treat everything wrapped between the brackets as a whole.  
 
-There are certain operators in R that streamline code executation and saves you some typing. For example, `.` can represent the object being passed into a function. For example, if you wish to concatenate a vector with other strings, you can use the syntax `df$col %>% str_c("before",.,"after")` to specify the order of the string placement. Learn more about the `magrittr`'s `.` placeholder [here][11].
+There are certain operators in R that streamline code executation and saves you some typing. For example, `.` can represent the object being passed into a function. For example, if you wish to concatenate a vector with other strings, you can use the syntax `df$col %>% str_c("before",.,"after")` to specify the order of the string placement. Learn more about the `magrittr`'s `.` placeholder [here][11].  
+
 ## Data import
 Very useful references for understanding [data type][19] and [data structure][20].  
 [Andrew's data import/export tutorial][21] shows you how to import and later export most types of data files. 
@@ -192,7 +192,7 @@ Very useful references for understanding [data type][19] and [data structure][20
 
 You're now ready to use functions to solve problems like these:  
 
-## Better printing & Inspection
+### Better printing & Inspection
 ```{r echo=FALSE}
 html_table_width <- function(kable_output, width){
   width_html <- paste0(paste0('<td width="', width, '">'), collapse = "\n")
@@ -282,7 +282,7 @@ print_kable(12)
 ```{r echo=FALSE, results='asis'}
 print_kable(14)
 ```
-## R Studio Shortcuts
+### R Studio Shortcuts
 Here's a comprehensive [R Studio IDE cheat sheet][18].
 
 ```{r echo=FALSE, results='asis'}
