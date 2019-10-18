@@ -1,5 +1,5 @@
 ---
-title: "My R Cheat Sheet"
+title: "My Data Cleaning in R Cheat Sheet"
 author: "Yanqi Xu"
 date: "`r Sys.Date()`"
 output: 
@@ -81,18 +81,19 @@ options(knitr.kable.NA = '')
 library(kableExtra)
 ```
 
-Hi! Welcome to my data journalism R cheat sheet for cleaning and wrangling data. Just like the [R cheat sheet resources][10] of package-based cheat sheets, Journalists have put out cheat sheets before, like [MaryJo Webster's R cheat sheet][03]. Hat tip to her and her [amazing collection of data journalism resources][04]!
+Hi! Welcome to my data journalism R cheat sheet for cleaning and wrangling data. You may have seen other [R cheat sheet resources][10] of package-based cheat sheets. Journalists have also put out cheat sheets before, like [MaryJo Webster's R cheat sheet][03]. Hat tip to her and her [amazing collection of data journalism resources][04]! This is what I use for quick references to data cleaning functions!
 
-I use this cheat sheet as an roadmap to functions I will likely encounter and use when I am cleaning data, so I am hoping that it can save you some time googling around. Most of the functions listed here are what I collected when cleaning data at the NICAR data library and for the [accountability project][14] at the Investigative Reporting Workshop.
+I use this cheat sheet as an roadmap to functions I will likely encounter and use, so I am hoping that it can save you some time googling around. Most of the functions listed here are what I collected when cleaning data at the NICAR data library and for the [accountability project][14] at the Investigative Reporting Workshop.
 
 # What's this for?
-Much as I use data cleaning functions on a regular basis, the syntax or function names sometimes get fuzzy every once in a while. So I have organized some most-frequently-used functions for certain goals in data processing and also pitfalls when using them! 
+Much as I use data cleaning functions on a regular basis, the syntax or function names sometimes get fuzzy every once in a while. So I have organized some most-frequently-used functions for certain goals in data processing and also pitfalls when using them! I have included useful links to discussions about the functions by other people. Thanks, internet!
+
 # A word about programming
-I always think the most important thing to know about functions and to tap into their strengths is to understand what you're dealing with, i.e. [data structures][20]. When I can't write clean code and get it to work, I always take out my pen and pad and jot down what I want to achieve and the end products I wish to have. This basically helps me get a grasp of the object at hand, and break them down into the smallest unit possible, and how these units can form the end products you want. For example, are you trying to  modify a column or add a new column based on an existing column, which are zipped vectors made up of individual elements? That's probably why the `length(df)`returns the number of columns.
+I always think the most important thing to know about functions and to tap into their strengths is to understand what you're dealing with, i.e. [data structures][20]. When I can't write clean code and get it to work, I always take out my pen and pad and jot down what I want to achieve and the end products I wish to have. This basically helps me get a grasp of the objects at hand, and break them down into the smallest unit possible, and how these units can form the end products you want. For example, are you trying to  modify a column (rewrite) or add a new column based on an existing column, which are zipped vectors made up of individual elements (That's probably why the `length(df)`returns the number of columns)? If you're modifying a column, you can assign a new vector to `df$col`. If you're adding a column, you'll probably use mutate on the dataframe itself with `mutate` from the `dyplyr` package. 
 
 There are, of course, more than one way to **let's not skin a cat**! For example, picture a jumbled field of last name, first name. If you wish to separate the names into different columns, you can either use the `separate()` function to split up the column by a certain character, or you can use regular expression to capture whatever goes before the comma with `str_match("^(.+),")[,2]`, and whatever comes after as  `str_match(",(.+)$")[,2]`. Pick and choose as you wish!
 
-This cheat sheet  doesn't cover the nuts and bolts of R, for which I highly recommend Andrew Ba Tran's amazing tutorial [Journalism with R][02].
+This cheat sheet doesn't cover the nuts and bolts of R, for which I highly recommend Andrew Ba Tran's amazing tutorial [Journalism with R][02].
 
 [02]: http://learn.r-journalism.com/en/introduction/
 [03]: https://mjwebster.github.io/DataJ/R/Rcheatsheet.html
@@ -118,8 +119,11 @@ This cheat sheet  doesn't cover the nuts and bolts of R, for which I highly reco
 [23]: https://rstudio.com/wp-content/uploads/2019/01/Cheatsheets_2019.pdf#page=9
 [24]: https://r4ds.had.co.nz/vectors.html
 [25]: https://cfss.uchicago.edu/setup/git-with-rstudio/
+[26]: https://www.r-bloggers.com/r-studio-shortcuts-and-tips/
+[27]: https://www.r-bloggers.com/r-studio-shortcuts-and-tips-part-2/
+
 # Something about libraries
-Since other people have spent all this time writing functions and packaged them, we use their functions by calling the package names (which may take developers a lot of time to come up with) first in the R console or scripts. It's important to declare the packages used at the top of your R Markdown or R scripts file, especially if you knit the file (in order to generate a standalone html for the Rmd in a readable format), otherwise it will throw a bunch of errors. 
+Since other people have spent all this time writing functions and packaged them, we use their functions by calling the package names (which may take developers a lot of time to come up with) first in the R console or scripts. It's important to declare the packages used at the top of your R Markdown or R scripts file, especially if you need to knit the file (in order to generate a standalone html for the Rmd in a readable format), otherwise it will throw a bunch of errors. 
 This also assumes that you have the packages installed already. If you wish to install new packages, use `install.packages("packagename")` first or use the packages pane to manage your packages (by default, the lower right-hand side pane). If you are trying to install a package that is not on CRAN yet and couldn't be installed by using the `install.packages("packagename")` function, use the [remotes][06] package's `remotes::install_github("r-lib/remotes")`. The double colons help you run a function from a certain package, use `{package_name}::{function_name}`. I am sure that you have figured out that `remotes` is on CRAN, so that it can be installed, with the command `install.packages('remotes')`. 
 The `tidyverse` package solves most of the problems related to data cleaning. It includes all these packages:
 
@@ -130,8 +134,8 @@ tidyverse_packages()
 # Something about functions
 Functions are just objects. They exist in those packages!
 So if you want ot know more about functions themselves, call them by their names, without parathenses in the console. 
-For the documentation, type "?" followed by the function name, will give you its documentation laid out in the help window. Try `?str_split`. 
-For how the function was written to make sense of how it's executed, simply type the name of the function. Like `str_split`.
+For the documentation, type "?" followed by the function name, will give you its documentation laid out in the help window. Try `?str_split`. You can also see popups in the console when you type in function name, press F1 (Fn + F1) will also generate the function help view in the Help pane.  
+For how the function was written to make sense of how it's executed, simply type the name of the function. Like `str_split`.  
 Further Readings:
 [Introduction to the R Language Functions, Berkeley Workshop][05]
 
@@ -294,7 +298,7 @@ x = tibble(what_it_does = pull(My_R_cheatsheet[{cutoff[length(cutoff)]+1}:nrow(M
 ```
 
 # Good reads
-
+* R Studio Shortcuts: [Part 1][26], [Part 2][27]
 * RMarkdown: [knitr syntax][16].
 This cheat sheet was originally a [spreadsheet][13], and you can learn about how I turned it into a rendered html page with the package `knitr` in the Rmd.
 * Regex: [regexplain package][09]: a handy tool for using regex in RStudio
