@@ -307,3 +307,10 @@ This cheat sheet was originally a [spreadsheet][13], and you can learn about how
 * GitHub: [Using Git with RStudio][25]
 
 Feel free to use the cheat sheet however you want. It is definitely imperfect and not remotely all-encompassing or error-free. Please don't hesitate to point out any mistakes in the explanation.If there's any R function you wish to add that could be helpful for data cleaning, please fill out this [google form][12] and I'll add them to this file.
+
+Many thanks to [Kiernan Nicholls][28] and [Prof. Michael Kearney][29] for teaching me their R skills, and [Yan Wu][30] for helping me with cutomized CSS of this webpage. 
+
+[28]: https://github.com/kiernann
+[29]: https://hermionewy.github.io/data.html
+[30]: https://github.com/mkearney
+[30]:
