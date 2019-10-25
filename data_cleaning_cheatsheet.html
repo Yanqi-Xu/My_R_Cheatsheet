@@ -12,7 +12,7 @@
 
 <meta name="author" content="Yanqi Xu" />
 
-<meta name="date" content="2019-10-18" />
+<meta name="date" content="2019-10-24" />
 
 <title>My Data Cleaning in R Cheat Sheet</title>
 
@@ -1539,7 +1539,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">My Data Cleaning in R Cheat Sheet</h1>
 <h4 class="author">Yanqi Xu</h4>
-<h4 class="date">2019-10-18</h4>
+<h4 class="date">2019-10-24</h4>
 
 </div>
 
@@ -1808,9 +1808,10 @@ turn values into NA
 dplyr
 </td>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-na_if(df$col)
+na_if(df$col, y) OR wv &lt;- wv %&gt;% mutate(city_clean = case_when( city_clean %in% c(“WV”,“WEB BASED”,“A”,“PO BOX”,“ANYWHERE USA”,“VARIES”,“COUNTY”) ~ NA_character_, TRUE ~ as.character(city_clean)))
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
+The value to be replaced is not a regex. To replace multiple values with NA, try case_when()
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
@@ -2220,7 +2221,7 @@ dplyr
 my_data%&gt;%select(starts_with(“Petal”))
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
-starts_with() is a syntax that is part of the dplyr package that works with select() only.
+starts_with() is a syntax that is part of the dplyr package that works with select() or vars() when used with mutate_at/summarize_at(). See batch processing session for usage of mutate_at().
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 </td>
@@ -2993,10 +2994,10 @@ campfin is a package written by my colleague Kiernan Nicholls at IRW, yay! count
 find out elements in x that are not in y
 </td>
 <td style="text-align:left;width: 100px; max-width: 100px; ">
-base
+base, dplyr
 </td>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
-setdiff(x, y) OR anti_join(x,y)
+setdiff(x, y) OR anti_join(x,y, by = (“col1”,“col2”))
 </td>
 <td style="text-align:left;width: 200px; max-width: 200px; ">
 setdiff() removes duplicates! Order is important!
@@ -3081,6 +3082,22 @@ references
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+For a set of logical vectors, evaluate if at least one condition is met/evaluated to TRUE?
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+base
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+locality_position &lt;- lapply(list, unlist,recursive = T) %&gt;% map(str_detect, “locality”) %&gt;% map_lgl(any)
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+Similar to the “OR” operator. The syntax returns locality_position, aka the index of a list to finds out the position of the string “locality” was in the list.
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
 <tr>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
 Change columns based on certain conditions (data type)
@@ -3224,10 +3241,26 @@ vroom::vroom(files)
 </tr>
 <tr>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
+Mutate multiple columns at once
+</td>
+<td style="text-align:left;width: 100px; max-width: 100px; ">
+purrr
+</td>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
+aklr &lt;- aklr %&gt;% mutate_at( .vars = vars(ends_with(“address”)), .funs = list(norm = normal_address), add_abbs = usps_street, na_rep = TRUE )
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+mutate_at() lets you deal with multiple columns at the same time, very useful when combined with the vars() function with similar semantics to select().
+</td>
+<td style="text-align:left;width: 200px; max-width: 200px; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 50px; max-width: 50px; ">
 apply a function to multiple elements
 </td>
 <td style="text-align:left;width: 100px; max-width: 100px; ">
-purr
+purrr
 </td>
 <td style="text-align:left;width: 50px; max-width: 50px; ">
 dir_ls(path = raw_dir, glob = &quot;*.csv&quot;) %&gt;% map( read_delim, args)
@@ -3267,7 +3300,7 @@ switch between source editor and console
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
-ctrl + 1 - source ctrl + 2 - console ctrl+3 - help ctrl+4 - history/environment
+ctrl + 1 - source ctrl + 2 - console ctrl+3 - help/viewer/plots/packages/files ctrl+4 - history/environment
 </td>
 </tr>
 <tr>
@@ -3507,7 +3540,7 @@ shift + cmd/ctrl + K
 <li>GitHub: <a href="https://cfss.uchicago.edu/setup/git-with-rstudio/">Using Git with RStudio</a></li>
 </ul>
 <p>Feel free to use the cheat sheet however you want. It is definitely imperfect and not remotely all-encompassing or error-free. Please don’t hesitate to point out any mistakes in the explanation.If there’s any R function you wish to add that could be helpful for data cleaning, please fill out this <a href="https://forms.gle/2jQJksuyrZJZJwVX6">google form</a> and I’ll add them to this file.</p>
-<p>Many thanks to <a href="https://github.com/kiernann">Kiernan Nicholls</a> and <a href="https://hermionewy.github.io/data.html">Prof. Michael Kearney</a> for teaching me their R skills, and <a href>Yan Wu</a> for helping me with cutomized CSS of this webpage.</p>
+<p>Many thanks to <a href="https://github.com/kiernann">Kiernan Nicholls</a> and <a href="https://hermionewy.github.io/data.html">Prof. Michael Kearney</a> for teaching me their R skills, and <a href="https://github.com/mkearney">Yan Wu</a> for helping me with cutomized CSS of this webpage.</p>
 </div>
 
 

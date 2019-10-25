@@ -313,4 +313,3 @@ Many thanks to [Kiernan Nicholls][28] and [Prof. Michael Kearney][29] for teachi
 [28]: https://github.com/kiernann
 [29]: https://hermionewy.github.io/data.html
 [30]: https://github.com/mkearney
-[30]:
